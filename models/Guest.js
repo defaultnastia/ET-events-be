@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { emailRegExp } from "../constants/guestConstants.js";
+import { emailRegExp, sourceTypes } from "../constants/guestConstants.js";
 
 const guestSchema = new Schema(
   {
@@ -15,6 +15,11 @@ const guestSchema = new Schema(
     birthDate: {
       type: Date,
       required: [true, "Set birth date of the guest"],
+    },
+    source: {
+      type: String,
+      enum: sourceTypes,
+      required: [true, "Set the source of info: social, friends, myself"],
     },
     eventId: {
       type: Schema.Types.ObjectId,
