@@ -1,6 +1,6 @@
 import express from "express";
 import validateBody from "../decorators/validateBody.js";
-import { addGuestSchema } from "../schemas/eventsSchemas.js";
+import { addGuestSchema } from "../schemas/guestsSchemas.js";
 import eventsControllers from "../controllers/eventsControllers.js";
 
 const addEventGuestsValidation = validateBody(addGuestSchema);
