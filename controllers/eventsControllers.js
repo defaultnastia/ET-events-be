@@ -7,12 +7,12 @@ const getAllEvents = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
 
-  const result = await eventsServices.getAllEvents(skip, limit);
+  const { total, result } = await eventsServices.getAllEvents(skip, limit);
 
-  if (!result.length) throw requestError(404, "No events found");
+  if (!result) throw requestError(404, "No events found");
 
   res.json({
-    message: `${result.length} events were found`,
+    total,
     result,
   });
 };
@@ -22,16 +22,16 @@ const getEventGuests = async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
 
-  const result = await guestsServices.getAllGuests(
+  const { total, results } = await guestsServices.getAllGuests(
     { eventId },
     { skip, limit }
   );
 
-  if (!result) throw requestError(404, "No guests found");
+  if (!total) throw requestError(404, "No guests found");
 
   res.json({
-    message: `${result.length} guests were found`,
-    result,
+    total,
+    results,
   });
 };
 

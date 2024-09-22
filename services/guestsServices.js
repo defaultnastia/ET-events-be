@@ -1,9 +1,11 @@
 import Guest from "../models/Guest.js";
 
-export const getAllGuests = (filter, params) => {
+export const getAllGuests = async (filter, params) => {
   const { skip, limit } = params;
 
-  return Guest.find(filter).skip(skip).limit(limit);
+  const total = await Guest.countDocuments();
+  const results = await Guest.find(filter).skip(skip).limit(limit);
+  return { total, results };
 };
 
 export const createGuest = (data) => {
