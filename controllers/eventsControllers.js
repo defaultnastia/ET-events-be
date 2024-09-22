@@ -23,12 +23,12 @@ const getAllEvents = async (req, res) => {
 
 const getEventGuests = async (req, res) => {
   const { id: eventId } = req.params;
-  const { page = 1, limit = 20 } = req.query;
+  const { page = 1, limit = 20, query } = req.query;
   const skip = (page - 1) * limit;
 
   const { total, results } = await guestsServices.getAllGuests(
-    { eventId },
-    { skip, limit }
+    { eventId, query },
+    { skip, limit, query }
   );
 
   if (!results.length) throw requestError(404, "No guests found");
