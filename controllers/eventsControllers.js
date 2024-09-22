@@ -4,10 +4,14 @@ import controllerWrap from "../decorators/controllerWrap.js";
 import requestError from "../helpers/requestError.js";
 
 const getAllEvents = async (req, res) => {
-  const { page = 1, limit = 20 } = req.query;
+  const { page = 1, limit = 20, sort } = req.query;
   const skip = (page - 1) * limit;
 
-  const { total, results } = await eventsServices.getAllEvents(skip, limit);
+  const { total, results } = await eventsServices.getAllEvents({
+    sortField: sort,
+    skip,
+    limit,
+  });
 
   if (!results.length) throw requestError(404, "No events found");
 
